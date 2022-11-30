@@ -1,5 +1,7 @@
 # POKEMEN REMAKE
 
+## 没有代码基础的可以去看图文版的PDF文件
+
 ## 配置环境
 
 * 本项目应在基于MSVC编译器的环境下运行，这里采用Visual Studio 2022(Community)
