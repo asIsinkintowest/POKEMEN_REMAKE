@@ -14,10 +14,11 @@
 #define row_inner 50   //分区地图的行
 #define line_inner 100 //分区地图的列数
 #define many 116        //宝可梦的个数
-#define screen_height 900 //窗口高度（行大小），单位是像素，为创建的easyx的界面的大小
-#define screen_width 1500   //窗口宽度（列大小），单位是像素，为创建的easyx的界面的大小
-#define line_num 71 //摄像头的行数
-#define col_num 111 //摄像头的列数
+#define screen_height 720 //窗口高度（行大小），单位是像素，为创建的easyx的界面的大小
+#define screen_width 1200   //窗口宽度（列大小），单位是像素，为创建的easyx的界面的大小
+#define line_num 61 //摄像头的行数
+#define col_num 101 //摄像头的列数
+#define size 2  //字符画的大小
 int map_flag[4] = { 1, 1, 1, 1 };   //边界判断
 int HEIGHT = 12, WIDTH = 12;    //地图字符的大小
 int x, y;              //x，y是人物中心点在地图上的坐标
@@ -1179,8 +1180,8 @@ void print_map(char photohead[line_num][col_num])
 
         for (int j = 0; j < col_num; j++)
         {
-            height = 15 + HEIGHT * i;
-            width = 85 + WIDTH * j;
+            height = 0 + HEIGHT * i;
+            width = 0 + WIDTH * j;
             outtextxy(width, height, photohead[i][j]);
 
         }
@@ -1193,7 +1194,7 @@ void print_map(char photohead[line_num][col_num])
 void fight(int part[row_inner][line_inner])
 {
     iffight = 1;
-    initgraph(1500, 900, EW_SHOWCONSOLE);		// 窗口大小
+    initgraph(screen_width, screen_height, EW_SHOWCONSOLE);		// 窗口大小
     setbkcolor(RGB(255, 251, 240));				// 背景色
     cleardevice();								// 清屏显示背景色
     setfillcolor(RGB(255, 251, 240));			// 填充颜色背景色
@@ -1250,14 +1251,14 @@ void fight(int part[row_inner][line_inner])
     drawLeft();									// 左侧进入战斗起始界面
     // 引入敌方宝可梦字符画
     settextcolor(BLACK);						// 文字颜色
-    settextstyle(3, 3, "宋体");					// 字体形式 高度，宽度，字体
+    settextstyle(size, size, "宋体");					// 字体形式 高度，宽度，字体
     setbkmode(TRANSPARENT);						// 考虑到文字背景也有默认颜色，可能发生遮挡，所以将文字背景改为透明
-    int x1 = 1100;								// 设置字符画输出的水平位置
-    int	y1 = 20;								// 设置字符画输出的竖直位置
+    int x1 = (11*screen_width)/15;								// 设置字符画输出的水平位置
+    int	y1 = (screen_height/45);								// 设置字符画输出的竖直位置
     // 输出字符画
     for (int i = 0; i < 100; i++) {
         outtextxy(x1, y1, POKEMEN[OCCUR].a[i]);
-        y1 += 3;
+        y1 += size;
     }
     FlushBatchDraw();
     EndBatchDraw();
@@ -1431,37 +1432,37 @@ void pokemenCopy(int part[row_inner][line_inner], int temp_level)
 
 // 左侧进入战斗起始界面
 void drawLeft() {
-    fillroundrect(20, 580, 1140, 880, 20, 20);  // 画底部左侧框
+    fillroundrect((screen_width/75), (screen_height - (16 * screen_height) / 45), (screen_width-(6* screen_width)/25), (screen_height - (screen_height / 45)), 20, 20);  // 画底部左侧框
     settextcolor(BLACK);						// 文字颜色
-    settextstyle(80, 0, "宋体");					// 字体形式 高度，宽度，字体
+    settextstyle((4 * screen_width) / 75, 0, "宋体");					// 字体形式 高度，宽度，字体
     setbkmode(TRANSPARENT);						// 考虑到文字背景也有默认颜色，可能发生遮挡，所以将文字背景改为透明
-    outtextxy(40, 600, text[0]);				// 指定位置打印
-    outtextxy(443, 600, POKEMEN[OCCUR].name);
-    outtextxy(40, 690, text[1]);
+    outtextxy((2*screen_width)/75, (2 * screen_height) / 3, text[0]);				// 指定位置打印
+    outtextxy(443, (2 * screen_height) / 3, POKEMEN[OCCUR].name);
+    outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 10), text[1]);
 }
 
 // 右侧进入战斗起始界面
 void drawRight() {
-    fillroundrect(1160, 580, 1480, 880, 20, 20);	// 画底部右侧框
+    fillroundrect(screen_width - ((17 * screen_width) / 75), (screen_height-(16* screen_height)/45), (screen_width - (screen_width / 75)), (screen_height - (screen_height / 45)), 20, 20);	// 画底部右侧框
     settextcolor(BLACK);
-    settextstyle(80, 0, "宋体");
+    settextstyle((4* screen_width)/75, 0, "宋体");
     setbkmode(TRANSPARENT);
-    outtextxy(1240, 600, "战斗");
-    outtextxy(1240, 690, "捕捉");
-    outtextxy(1240, 780, "逃跑");
+    outtextxy((screen_width-(13* screen_width)/75), (2* screen_height)/3, "战斗");
+    outtextxy((screen_width - (13 * screen_width) / 75), (2 * screen_height) / 3+(screen_height/10), "捕捉");
+    outtextxy((screen_width - (13 * screen_width) / 75), (2 * screen_height) / 3 + (screen_height / 5), "逃跑");
 }
 
 // 检测长度
 int position(const char* a) {
     switch (strlen(a)) {
     case 8:
-        return 1200;
+        return (4* screen_width)/5;
     case 6:
-        return 1230;
+        return (4 * screen_width) / 5+(screen_width/50);
     case 4:
-        return 1260;
+        return (4 * screen_width) / 5 + (screen_width / 25);
     case 2:
-        return 1290;
+        return (4 * screen_width) / 5 + (3*screen_width / 50);
     default: return 0;
     }
 }
@@ -1476,15 +1477,15 @@ int getMouseMessage() {
             switch (msg.message)
             {
             case WM_LBUTTONDOWN:																	// 判断左键
-                if (msg.x >= 1200 && msg.x <= 1440 && msg.y >= 590 && msg.y <= 680)					// 规定上方位置并返回值
+                if (msg.x >= (4*screen_width)/5 && msg.x <= (24*screen_width)/25 && msg.y >= ((2*screen_height)/3-(screen_height/90)) && msg.y <= (67*screen_height)/90)					// 规定上方位置并返回值
                 {
                     return 1;
                 }
-                else if (msg.x >= 1200 && msg.x <= 1440 && msg.y >= 681 && msg.y <= 770)			//规定中间位置并返回值
+                else if (msg.x >= (4 * screen_width) / 5 && msg.x <= (24 * screen_width) / 25 && msg.y >= ((2 * screen_height) / 3 - (screen_height / 90))+1 && msg.y <= (67 * screen_height) / 90+(screen_height/10))			//规定中间位置并返回值
                 {
                     return 2;
                 }
-                else if (msg.x >= 1200 && msg.x <= 1440 && msg.y >= 771 && msg.y <= 860)			// 规定下方位置并返回值
+                else if (msg.x >= (4 * screen_width) / 5 && msg.x <= (24 * screen_width) / 25 && msg.y >= (67 * screen_height) / 90 + (screen_height / 10)+1 && msg.y <= (67 * screen_height) / 90 + (screen_height / 5))			// 规定下方位置并返回值
                 {
                     return 3;
                 }
@@ -1514,66 +1515,66 @@ int chooseThePokemen(int n, int a, int b, int c) {
 
 // 左侧战斗界面
 void leftOutput(int a, double b, int c, double d) {
-    fillroundrect(20, 580, 1140, 880, 20, 20);
+    fillroundrect((screen_width / 75), (screen_height - (16 * screen_height) / 45), (screen_width - (6 * screen_width) / 25), (screen_height - (screen_height / 45)), 20, 20);
     settextcolor(BLACK);
-    settextstyle(80, 0, "宋体");
+    settextstyle((4*screen_width)/75, 0, "宋体");
     setbkmode(TRANSPARENT);
-    outtextxy(40, 600, POKEMEN[chosenPokemen].name);
-    outtextxy(40, 690, text[3]);
+    outtextxy((4 * screen_width) / 150, (2*screen_height)/3, POKEMEN[chosenPokemen].name);
+    outtextxy((4 * screen_width) / 150, (2 * screen_height) / 3+(screen_height/10), text[3]);
     switch (a) {
     case 1:
-        outtextxy(280, 690, POKEMEN[chosenPokemen].skill_one);
+        outtextxy((14*screen_width)/75, (2 * screen_height) / 3 + (screen_height / 10), POKEMEN[chosenPokemen].skill_one);
         break;
     case 2:
-        outtextxy(280, 690, POKEMEN[chosenPokemen].skill_two);
+        outtextxy((14 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 10), POKEMEN[chosenPokemen].skill_two);
         break;
     case 3:
-        outtextxy(280, 690, POKEMEN[chosenPokemen].skill_three);
+        outtextxy((14 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 10), POKEMEN[chosenPokemen].skill_three);
     }
     if (b == 0) {
-        outtextxy(40, 780, text[8]);
+        outtextxy((2*screen_width)/75, (2 * screen_height) / 3 + (screen_height / 5), text[8]);
     }
     else if (b == 0.5) {
-        outtextxy(40, 780, text[7]);
+        outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 5), text[7]);
     }
     else if (b == 1) {
-        outtextxy(40, 780, text[6]);
+        outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 5), text[6]);
     }
     else if (b == 2) {
-        outtextxy(40, 780, text[5]);
+        outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 5), text[5]);
     }
 
     Sleep(2000);								// 停留两秒
 
-    fillroundrect(20, 580, 1140, 880, 20, 20);
+    fillroundrect((screen_width / 75), (screen_height - (16 * screen_height) / 45), (screen_width - (6 * screen_width) / 25), (screen_height - (screen_height / 45)), 20, 20);
     settextcolor(BLACK);
-    settextstyle(80, 0, "宋体");
+    settextstyle((4*screen_width)/75, 0, "宋体");
     setbkmode(TRANSPARENT);
-    outtextxy(40, 600, text[4]);
-    outtextxy(280, 600, POKEMEN[OCCUR].name);
-    outtextxy(40, 690, text[3]);
+    outtextxy((2 * screen_width) / 75,(2*screen_height)/3, text[4]);
+    outtextxy((14*screen_width)/75, (2 * screen_height) / 3, POKEMEN[OCCUR].name);
+    outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3+(screen_height/10), text[3]);
     switch (c) {
     case 1:
-        outtextxy(280, 690, POKEMEN[OCCUR].skill_one);
+        outtextxy((14 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 10), POKEMEN[OCCUR].skill_one);
         break;
     case 2:
-        outtextxy(280, 690, POKEMEN[OCCUR].skill_two);
+        outtextxy((14 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 10), POKEMEN[OCCUR].skill_two);
         break;
     case 3:
-        outtextxy(280, 690, POKEMEN[OCCUR].skill_three);
+        outtextxy((14 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 10), POKEMEN[OCCUR].skill_three);
         break;
     }
     if (d == 0) {
-        outtextxy(40, 780, text[8]);
+        outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 5), text[8]);
     }
     else if (d == 0.5) {
-        outtextxy(40, 780, text[7]);
+        outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 5), text[7]);
     }
     else if (d == 1) {
-        outtextxy(40, 780, text[6]);
+        outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 5), text[6]);
     }
     else if (d == 2) {
-        outtextxy(40, 780, text[5]);
+        outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 5), text[5]);
     }
     drawRight();
 }
@@ -1583,28 +1584,28 @@ void youPokemen(float youallBlood, int temp_level) {
     BeginBatchDraw();
     char youLevel[100];
     float youPercentage = live_number[1] / youallBlood;
-    int bloodLength = (int)((float(320)) * youPercentage);
-    youBlood = 1100 + bloodLength;
+    int bloodLength = (int)((float((16 * screen_width) / 75)) * youPercentage);
+    youBlood = (11 * screen_width) / 15 + bloodLength;
     _itoa_s(temp_level, youLevel, 100, 10);
-    fillroundrect(1000, 400, 1450, 500, 40, 40);
-    solidrectangle(996, 380, 1446, 480);
-    solidrectangle(1440, 390, 1460, 430);
-    solidrectangle(990, 480, 1020, 510);
+    fillroundrect((2*screen_width)/3, (4*screen_height)/9, (29*screen_width)/30, (5*screen_height)/9, 40, 40);
+    solidrectangle((2 * screen_width) / 3-(screen_width/375), (19*screen_height)/45, (38*screen_width)/150, (19 * screen_height) / 45 + (screen_height / 9));
+    solidrectangle((24*screen_width)/25,  (4 * screen_height) / 9 - (screen_height / 45)+(screen_height/90), (24 * screen_width) / 25+(screen_width/75), (43*screen_height)/90);
+    solidrectangle((33*screen_width)/50, (8*screen_height)/15, (17*screen_width)/25, (17*screen_height)/30);
     settextcolor(BLACK);
-    settextstyle(80, 0, "宋体");
+    settextstyle((4*screen_width)/75, 0, "宋体");
     setbkmode(TRANSPARENT);
-    outtextxy(1000, 340, POKEMEN[OCCUR].name);
+    outtextxy((2*screen_width)/3, (33*screen_height)/90, POKEMEN[OCCUR].name);
     settextcolor(BLACK);
-    settextstyle(50, 0, "Cascadia Code");
+    settextstyle((screen_width)/30, 0, "Cascadia Code");
     setbkmode(TRANSPARENT);
-    outtextxy(1360, 370, "Lv");
-    outtextxy(1410, 370, youLevel);
-    outtextxy(1040, 440, "HP");
+    outtextxy((136*screen_width)/150, (35 * screen_height) / 90, "Lv");
+    outtextxy((136 * screen_width) / 150+(screen_width/30), (35*screen_height)/90, youLevel);
+    outtextxy((104*screen_width)/150, (44*screen_height)/90, "HP");
     setfillcolor(RED);
-    if (youBlood < 1100) {
-        youBlood = 1101;
+    if (youBlood < (11*screen_width)/15) {
+        youBlood = (11 * screen_width) / 15+1;
     }
-    solidrectangle(1100, 460, youBlood, 480);
+    solidrectangle((11 * screen_width) / 15, (23*screen_height)/45, youBlood, (19 * screen_height) / 45 + (screen_height / 9));
 
     setfillcolor(RGB(255, 251, 240));
     FlushBatchDraw();
@@ -1616,34 +1617,34 @@ void myPokemen(float myallBlood, int myAllblood, char myAllBlood[100], int chose
     BeginBatchDraw();
     char myLevel[100], nowMyBlood[100];
     float myPercentage = live_number[0] / myallBlood;
-    int bloodLength = (int)((float(320)) * myPercentage);
-    myBlood = 130 + bloodLength;
+    int bloodLength = (int)((float((16*screen_width)/75) * myPercentage));
+    myBlood = (13*screen_width)/150 + bloodLength;
     int nowMyblood = (int)((float(myAllblood)) * myPercentage);
     _itoa_s(nowMyblood, nowMyBlood, 100, 10);
     _itoa_s(pokemen_level[chosenPokemen][0], myLevel, 100, 10);
-    fillroundrect(50, 100, 500, 200, 40, 40);
-    solidrectangle(54, 80, 504, 180);
-    solidrectangle(40, 90, 60, 130);
-    solidrectangle(480, 180, 510, 210);
+    fillroundrect((screen_width/30), (screen_height/9), (screen_width/3), (2*screen_height)/9, 40, 40);
+    solidrectangle((screen_width / 30)+(screen_width/375), (8*screen_height)/90, (screen_width / 3 + (screen_width / 375)), (screen_height/5));
+    solidrectangle((10*screen_width / 375), (screen_height/10), (screen_width/25), (13*screen_height)/90);
+    solidrectangle((8*(screen_width)/25), (screen_height/5),(screen_width/3)+(screen_width/15), (21*screen_height)/90);
     settextcolor(BLACK);
-    settextstyle(80, 0, "宋体");
+    settextstyle((4*screen_width)/75, 0, "宋体");
     setbkmode(TRANSPARENT);
-    outtextxy(25, 40, POKEMEN[chosenPokemen].name);
+    outtextxy((screen_width/60), (4*screen_height)/90, POKEMEN[chosenPokemen].name);
     settextcolor(BLACK);
-    settextstyle(50, 0, "Cascadia Code");
+    settextstyle((screen_width)/30, 0, "Cascadia Code");
     setbkmode(TRANSPARENT);
-    outtextxy(385, 70, "Lv");
-    outtextxy(435, 70, myLevel);
-    outtextxy(70, 135, "HP");
+    outtextxy((77*screen_width)/300, (7*screen_height)/90, "Lv");
+    outtextxy((87 * screen_width) / 300, (7 * screen_height) / 90, myLevel);
+    outtextxy((7*screen_width)/150, (3*screen_height)/20, "HP");
     setfillcolor(RED);
-    if (myBlood < 130) {
-        myBlood = 131;
+    if (myBlood < (13 * screen_width) / 150) {
+        myBlood = (13 * screen_width) / 150+1;
     }
-    solidrectangle(130, 155, myBlood, 175);
+    solidrectangle((13*screen_width)/150, (31*screen_height)/180, myBlood, (7*screen_height)/36);
     setfillcolor(RGB(255, 251, 240));
-    outtextxy(465, 135, nowMyBlood);
-    outtextxy(510, 135, "/");
-    outtextxy(535, 135, myAllBlood);
+    outtextxy((31*screen_width)/100, (3 * screen_height) / 20, nowMyBlood);
+    outtextxy((51*screen_width)/150, (3 * screen_height) / 20, "/");
+    outtextxy((107*screen_width)/300, (3 * screen_height) / 20, myAllBlood);
     FlushBatchDraw();
     EndBatchDraw();
 }
@@ -1651,32 +1652,32 @@ void myPokemen(float myallBlood, int myAllblood, char myAllBlood[100], int chose
 // 出战宠物
 void choosePokemen(int chosenPokemen) {
     settextcolor(BLACK);
-    settextstyle(3, 3, "宋体");
+    settextstyle(size, size, "宋体");
     setbkmode(TRANSPARENT);
     int x, y;
-    x = 100;
-    y = 240;
+    x = (screen_width)/100;
+    y = (4*screen_height)/15;
 
     // 输出字符画
     BeginBatchDraw();
     for (int i = 0; i < 100; i++) {
         outtextxy(x, y, POKEMEN[chosenPokemen].a[i]);
-        y += 3;
+        y += size;
     }
-    fillroundrect(20, 580, 1140, 880, 20, 20);
+    fillroundrect((screen_width / 75), (screen_height - (16 * screen_height) / 45), (screen_width - (6 * screen_width) / 25), (screen_height - (screen_height / 45)), 20, 20);
     settextcolor(BLACK);
-    settextstyle(80, 0, "宋体");
+    settextstyle((4*screen_width)/75, 0, "宋体");
     setbkmode(TRANSPARENT);
     FlushBatchDraw();
     EndBatchDraw();
     // 第一次出现固定语句
     if (times == 0) {
-        fillroundrect(20, 580, 1140, 880, 20, 20);
+        fillroundrect((screen_width / 75), (screen_height - (16 * screen_height) / 45), (screen_width - (6 * screen_width) / 25), (screen_height - (screen_height / 45)), 20, 20);
         settextcolor(BLACK);
-        settextstyle(80, 0, "宋体");
+        settextstyle((4 * screen_width) / 75, 0, "宋体");
         setbkmode(TRANSPARENT);
-        outtextxy(40, 600, text[2]);
-        outtextxy(40, 690, POKEMEN[chosenPokemen].name);
+        outtextxy((2 * screen_width) / 75, (2*screen_height)/3, text[2]);
+        outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3+(screen_height)/10, POKEMEN[chosenPokemen].name);
     }
 }
 
@@ -1685,12 +1686,12 @@ int firstChoose(int n, int p_one, int p_two, int p_three, int a, int b, int c) {
     int i = 0;
     switch (n) {
     case 1:														// 选择战斗
-        fillroundrect(1160, 580, 1480, 880, 20, 20);
+        fillroundrect(screen_width - ((17 * screen_width) / 75), (29*screen_height)/45, (screen_width - (screen_width / 75)), (screen_height - (screen_height / 45)), 20, 20);
         settextcolor(BLACK);
-        settextstyle(60, 0, "宋体");
-        outtextxy(p_one, 610, POKEMEN[a].name);
-        outtextxy(p_two, 700, POKEMEN[b].name);
-        outtextxy(p_three, 790, POKEMEN[c].name);
+        settextstyle((screen_width/25), 0, "宋体");
+        outtextxy(p_one, (61*screen_height)/90, POKEMEN[a].name);
+        outtextxy(p_two, (61 * screen_height) / 90+(screen_height/10), POKEMEN[b].name);
+        outtextxy(p_three, (61 * screen_height / 90) + (screen_height / 5), POKEMEN[c].name);
         clickPlace = getMouseMessage();							// 获取鼠标点击位置
         i = chooseThePokemen(clickPlace, a, b, c);				// 选择宠物
         drawRight();											// 右侧进入战斗起始界面
@@ -1698,21 +1699,21 @@ int firstChoose(int n, int p_one, int p_two, int p_three, int a, int b, int c) {
     case 2:                                                     // 选择捕捉
         if (ball() == 0)
         {
-            fillroundrect(20, 580, 1140, 880, 20, 20);
+            fillroundrect((screen_width / 75), (screen_height - (16 * screen_height) / 45), (screen_width - (6 * screen_width) / 25), (screen_height - (screen_height / 45)), 20, 20);
             settextcolor(BLACK);
-            settextstyle(80, 0, "宋体");
+            settextstyle((8*screen_width)/150, 0, "宋体");
             setbkmode(TRANSPARENT);
-            outtextxy(40, 600, text[11]);
-            outtextxy(40, 690, POKEMEN[OCCUR].name);
+            outtextxy((4 * screen_width) / 150, (2*screen_height)/3, text[11]);
+            outtextxy((4 * screen_width) / 150, (2 * screen_height) / 3+(screen_height/10), POKEMEN[OCCUR].name);
         }
         else {
             POKEMEN[OCCUR].trap = 1;
-            fillroundrect(20, 580, 1140, 880, 20, 20);
+            fillroundrect((screen_width / 75), (screen_height - (16 * screen_height) / 45), (screen_width - (6 * screen_width) / 25), (screen_height - (screen_height / 45)), 20, 20);
             settextcolor(BLACK);
-            settextstyle(80, 0, "宋体");
+            settextstyle((8 * screen_width) / 150, 0, "宋体");
             setbkmode(TRANSPARENT);
-            outtextxy(40, 600, text[10]);
-            outtextxy(40, 690, POKEMEN[OCCUR].name);
+            outtextxy((4 * screen_width) / 150, (2 * screen_height) / 3, text[10]);
+            outtextxy((4 * screen_width) / 150, (2 * screen_height) / 3 + (screen_height / 10), POKEMEN[OCCUR].name);
         }
 
         Sleep(2000);
@@ -1720,11 +1721,11 @@ int firstChoose(int n, int p_one, int p_two, int p_three, int a, int b, int c) {
         iffight = 0;
         break;
     case 3:														// 选择逃跑
-        fillroundrect(20, 580, 1140, 880, 20, 20);
+        fillroundrect((screen_width / 75), (screen_height - (16 * screen_height) / 45), (screen_width - (6 * screen_width) / 25), (screen_height - (screen_height / 45)), 20, 20);
         settextcolor(BLACK);
-        settextstyle(80, 0, "宋体");
+        settextstyle((8 * screen_width) / 150, 0, "宋体");
         setbkmode(TRANSPARENT);
-        outtextxy(40, 600, text[9]);
+        outtextxy((4 * screen_width) / 150, (2 * screen_height) / 3, text[9]);
 
         Sleep(2000);
 
@@ -1742,12 +1743,12 @@ void choose(int a, int s_one, int s_two, int s_three, int c, float youallBlood, 
         myPokemen(myallBlood, myAllblood, myAllBlood, chosenPokemen);// 我方宝可梦
         choosePokemen(chosenPokemen);
 
-        fillroundrect(1160, 580, 1480, 880, 20, 20);
+        fillroundrect(screen_width - ((17 * screen_width) / 75), (screen_height - (16 * screen_height) / 45), (screen_width - (screen_width / 75)), (screen_height - (screen_height / 45)), 20, 20);
         settextcolor(BLACK);
-        settextstyle(60, 0, "宋体");
-        outtextxy(s_one, 610, POKEMEN[chosenPokemen].skill_one);
-        outtextxy(s_two, 700, POKEMEN[chosenPokemen].skill_two);
-        outtextxy(s_three, 790, POKEMEN[chosenPokemen].skill_three);
+        settextstyle((screen_width/25), 0, "宋体");
+        outtextxy(s_one, (61 * screen_height / 90), POKEMEN[chosenPokemen].skill_one);
+        outtextxy(s_two, (61 * screen_height / 90)+(screen_height/10), POKEMEN[chosenPokemen].skill_two);
+        outtextxy(s_three, (61 * screen_height / 90) + (screen_height / 5), POKEMEN[chosenPokemen].skill_three);
 
         clickPlace = getMouseMessage();
         // live_number[1] -= POKEMEN[chosenPokemen].beat_one * (fuckJudge(POKEMEN[chosenPokemen].skill_type[clickPlace - 1], POKEMEN[OCCUR].type));
@@ -1797,24 +1798,24 @@ void choose(int a, int s_one, int s_two, int s_three, int c, float youallBlood, 
         leftOutput(clickPlace, myAttackEffect, c, youAttackEffect);									// 左侧战斗界面
         if (fightJudge() == 2) //对方宝可梦死亡
         {
-            fillroundrect(20, 580, 1140, 880, 20, 20);
+            fillroundrect((screen_width / 75), (screen_height - (16 * screen_height) / 45), (screen_width - (6 * screen_width) / 25), (screen_height - (screen_height / 45)), 20, 20);
             settextcolor(BLACK);
-            settextstyle(80, 0, "宋体");
+            settextstyle((4*screen_width)/75, 0, "宋体");
             setbkmode(TRANSPARENT);
             levelPlus(chosenPokemen);
-            outtextxy(40, 600, text[12]);
+            outtextxy((2 * screen_width) / 75, (2*screen_height)/3, text[12]);
             Sleep(2000);
             iffight = 0;
             break;
         }
         if (fightJudge() == 1) //我方宝可梦死亡
         {
-            fillroundrect(20, 580, 1140, 880, 20, 20);
+            fillroundrect((screen_width / 75), (screen_height - (16 * screen_height) / 45), (screen_width - (6 * screen_width) / 25), (screen_height - (screen_height / 45)), 20, 20);
             settextcolor(BLACK);
-            settextstyle(80, 0, "宋体");
+            settextstyle((4 * screen_width) / 75, 0, "宋体");
             setbkmode(TRANSPARENT);
-            outtextxy(40, 600, POKEMEN[chosenPokemen].name);
-            outtextxy(40, 690, text[13]);
+            outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3, POKEMEN[chosenPokemen].name);
+            outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3+(screen_height/10), text[13]);
             Sleep(2000);
             iffight = 0;
             break;
@@ -1824,21 +1825,21 @@ void choose(int a, int s_one, int s_two, int s_three, int c, float youallBlood, 
     case 2:// 选择捕捉 有3/4的概率抓到宝可梦
         if (ball() == 0)
         {
-            fillroundrect(20, 580, 1140, 880, 20, 20);
+            fillroundrect((screen_width / 75), (screen_height - (16 * screen_height) / 45), (screen_width - (6 * screen_width) / 25), (screen_height - (screen_height / 45)), 20, 20);
             settextcolor(BLACK);
-            settextstyle(80, 0, "宋体");
+            settextstyle((4 * screen_width) / 75, 0, "宋体");
             setbkmode(TRANSPARENT);
-            outtextxy(40, 600, text[11]);
-            outtextxy(40, 690, POKEMEN[OCCUR].name);
+            outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3, text[11]);
+            outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 10), POKEMEN[OCCUR].name);
         }
         else {
             POKEMEN[OCCUR].trap = 1;
-            fillroundrect(20, 580, 1140, 880, 20, 20);
+            fillroundrect((screen_width / 75), (screen_height - (16 * screen_height) / 45), (screen_width - (6 * screen_width) / 25), (screen_height - (screen_height / 45)), 20, 20);
             settextcolor(BLACK);
-            settextstyle(80, 0, "宋体");
+            settextstyle((4 * screen_width) / 75, 0, "宋体");
             setbkmode(TRANSPARENT);
-            outtextxy(40, 600, text[10]);
-            outtextxy(40, 690, POKEMEN[OCCUR].name);
+            outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3, text[10]);
+            outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3 + (screen_height / 10), POKEMEN[OCCUR].name);
         }
 
         Sleep(2000);
@@ -1846,11 +1847,11 @@ void choose(int a, int s_one, int s_two, int s_three, int c, float youallBlood, 
         iffight = 0;
         break;
     case 3:// 选择逃跑
-        fillroundrect(20, 580, 1140, 880, 20, 20);
+        fillroundrect((screen_width / 75), (screen_height - (16 * screen_height) / 45), (screen_width - (6 * screen_width) / 25), (screen_height - (screen_height / 45)), 20, 20);
         settextcolor(BLACK);
-        settextstyle(80, 0, "宋体");
+        settextstyle((4 * screen_width) / 75, 0, "宋体");
         setbkmode(TRANSPARENT);
-        outtextxy(40, 600, text[9]);
+        outtextxy((2 * screen_width) / 75, (2 * screen_height) / 3, text[9]);
 
         Sleep(2000);
 
