@@ -25,39 +25,21 @@
 
   下载地址：https://easyx.cn/easyx
 
-  ![image-20221130084558347](C:\Users\Amo\AppData\Roaming\Typora\typora-user-images\image-20221130084558347.png)
 
 * 打开文件地址，选择解压文件
 
-  ![image-20221130084822823](C:\Users\Amo\AppData\Roaming\Typora\typora-user-images\image-20221130084822823.png)
 
 * 接下来将include中的easyx.h和graphics.h粘贴到vs目录下的include文件夹中
-
-  ![image-20221130085116061](C:\Users\Amo\AppData\Roaming\Typora\typora-user-images\image-20221130085116061.png)
 
   我的文件路径如下
 
   Microsoft Visual Studio\2022\Community\VC\Auxiliary\VS\include
 
-  ![image-20221130085242961](C:\Users\Amo\AppData\Roaming\Typora\typora-user-images\image-20221130085242961.png)
-
 * 打开解压文件中的lib\VC2015,将x64和x86中的两个文件分别粘贴到vs目录下的x64和x86文件夹中
-
-  ![image-20221130090819038](C:\Users\Amo\AppData\Roaming\Typora\typora-user-images\image-20221130090819038.png)
-
-  ![image-20221130090837082](C:\Users\Amo\AppData\Roaming\Typora\typora-user-images\image-20221130090837082.png)
-
-  ![image-20221130090902836](C:\Users\Amo\AppData\Roaming\Typora\typora-user-images\image-20221130090902836.png)
-
-  ![image-20221130091123839](C:\Users\Amo\AppData\Roaming\Typora\typora-user-images\image-20221130091123839.png)
 
   我的lib目录位置为
 
   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\VS\lib
-
-  ![image-20221130091051197](C:\Users\Amo\AppData\Roaming\Typora\typora-user-images\image-20221130091051197.png)
-
-  ![image-20221130091300174](C:\Users\Amo\AppData\Roaming\Typora\typora-user-images\image-20221130091300174.png)
 
 * 重启VS，就可以使用了
 
@@ -70,11 +52,6 @@
   * 这五个文件在我的**GitHub仓库**里：https://github.com/asIsinkintowest/POKEMEN_REMAKE/tree/main
   * 要注意是第二个project文件，不是第一个
 
-  ![image-20221130132144849](C:\Users\Amo\AppData\Roaming\Typora\typora-user-images\image-20221130132144849.png)
-
-  ![image-20221130132243997](C:\Users\Amo\AppData\Roaming\Typora\typora-user-images\image-20221130132243997.png)
-
-  应该是上面图片的效果捏
 
 * 点击源文件->添加->现有项，选择pokemen.cpp文件
 
@@ -82,9 +59,6 @@
 
 * 点击上方的项目->属性->高级->字符集，选择多字节字符集，点击确定
 
-  ![image-20221130134521406](C:\Users\Amo\AppData\Roaming\Typora\typora-user-images\image-20221130134521406.png)
-
-  ![image-20221130134548249](C:\Users\Amo\AppData\Roaming\Typora\typora-user-images\image-20221130134548249.png)
 
 ## 程序运行
 
